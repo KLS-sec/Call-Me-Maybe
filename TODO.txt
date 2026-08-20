@@ -1,0 +1,47 @@
+0 Tout mettre dans une TODO list spécifique au projet en cours
+
+dedrama – rapide – finir – discipline
+
+General
+1 lire le pdf en entier une fois pour comprendre
+2 lister les regles au debut + en encart vers le work instruction(voir 3)
+3 Tutoriaux, principe généraux / fonctions autorisées
+4 recherche outils en ligne si concerné
+
+Exercice
+1 [O] Lire l exercice, lister les choses à apprendre
+2 Lire le w3school / autre concerné
+3 Remplir le work instructions
+4 Réorganiser les instructions de façon claire et compréhensible avec une checklist des éléments importants (brouillon des différentes grandes taches, sur papier si nécessaire)
+4.1 Organiser la liste des choses à faire et des demandes de l' exercice, leurs ordre, le temps alloué, objectifs clairs et avec feedback.(unit testing fréquent) (créer une routine de travail). Elle servira pour la TODO list
+5 Bosser avec une TODO list en arbre que je remplis et résout en avançant.
+6 Fin de projet : relire le projet en entier et check les dernier debuggings à
+faire
+
+X regarder liste pauses
+
+Si bloqué:
+-Voir exemples
+-réexpliquer par GPT
+-arrêter de se casser le crâne à voir plus compliqué, casse la tâche
+-le but c est d apprendre, pas de me casser le crâne, arrette de te fatiguer
+-faire étape par étape et implémenter
+---------------------------------------------
+Work instruction
+
+G [tutorials]
+
+[authorized functions]
+
+[Tools]
+
+[Asked files]
+
+[the plan / Todolist in a different file]
+(+ sketch of the different big parts)
+
+[exercise instructions - organized + general goal + explanation by gpt]
+
+[exercise instructions - original]
+
+G [general project instructions]
