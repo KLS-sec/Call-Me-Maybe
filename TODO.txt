@@ -1,6 +1,6 @@
-0 Tout mettre dans une TODO list spécifique au projet en cours
+DATE LIMITE LE 28 ! ! !
 
-dedrama – rapide – finir – discipline
+rapide – finir – discipline
 
 General
 1 lire le pdf en entier une fois pour comprendre
@@ -12,11 +12,15 @@ Exercice
 1 [O] Lire l exercice, lister les choses à apprendre
 2 Lire le w3school / autre concerné
 3 Remplir le work instructions
-4 Réorganiser les instructions de façon claire et compréhensible avec une checklist des éléments importants (brouillon des différentes grandes taches, sur papier si nécessaire)
-4.1 Organiser la liste des choses à faire et des demandes de l' exercice, leurs ordre, le temps alloué, objectifs clairs et avec feedback.(unit testing fréquent) (créer une routine de travail). Elle servira pour la TODO list
+4 Réorganiser les instructions de façon claire et compréhensible avec une
+  checklist des éléments importants (brouillon des différentes grandes taches,
+  sur papier si nécessaire)
+4.1 Organiser la liste des choses à faire et des demandes de l' exercice, leurs
+  ordre, le temps alloué, objectifs clairs et avec feedback.(unit testing
+  fréquent) (créer une routine de travail). Elle servira pour la TODO list
 5 Bosser avec une TODO list en arbre que je remplis et résout en avançant.
 6 Fin de projet : relire le projet en entier et check les dernier debuggings à
-faire
+  faire
 
 X regarder liste pauses
 
@@ -30,10 +34,26 @@ Si bloqué:
 Work instruction
 
 G [tutorials]
+https://github.com/SaraFreitas-dev/Call-me-maybe
+function calling:
+https://www.promptingguide.ai/applications/function_calling
+constrained codding:
+https://www.aidancooper.co.uk/constrained-decoding/
+https://zeroentropy.dev/concepts/constrained-decoding/
+Used AI:
+https://huggingface.co/Qwen/Qwen3-0.6B
+AI in general
+https://www.w3schools.com/gen_ai/
+https://www.w3schools.com/ai/
 
 [authorized functions]
 
 [Tools]
+checker (doc compresse dans slack) :
+"Automatic grader used to test the Call Me Maybe project. If at least one test
+passes during the evaluation, the project is considered validated.
+uv run python -m moulinette prepare_exercises --set private
+uv run python -m moulinette grade_student_answers --set private --student_answer_path"
 
 [Asked files]
 
