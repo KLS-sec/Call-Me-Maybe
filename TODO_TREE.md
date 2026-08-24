@@ -1,10 +1,12 @@
 # ONIT
 notebookllm lui donner le git complet
+installer la llm et tester dans le vide
 
 Tuto CMM:
 https://github.com/SaraFreitas-dev/Call-me-maybe
-  Read the basic page
+  V Read the basic page
     Read all the .md
+      0/10
 
 # NEXT
 
