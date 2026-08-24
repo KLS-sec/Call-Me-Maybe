@@ -1,14 +1,16 @@
 # ONIT
-notebookllm lui donner le git complet
-installer la llm et tester dans le vide
-
 Tuto CMM:
 https://github.com/SaraFreitas-dev/Call-me-maybe
   V Read the basic page
-    Read all the .md
-      0/10
+    Read the .md
+      llm*2 , tokenisation, uv * 2
+
+installer la llm et tester dans le vide
+
+
 
 # NEXT
+notebookllm lui donner le git complet
 
 # TODO
   function calling:

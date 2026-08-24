@@ -5,12 +5,12 @@ rapide – finir – discipline
 General
 V 1 lire le pdf en entier une fois pour comprendre
 V 2 lister les regles au debut + en encart vers le work instruction(voir 3)
-V 3 Tutoriaux, principe généraux / fonctions autorisées
+V 3 Liste de tutoriaux, principe généraux / fonctions autorisées
 V 4 recherche outils en ligne si concerné
 
 Exercice
 V 1 [O] Lire l exercice, lister les choses à apprendre
-2 Lire le w3school / autre tuto (TODO si necessaire)
+2 Lire le w3school / autre tuto (TODO si necessaire) tout en experimentant
 3 Remplir le work instructions
 4 Réorganiser les instructions de façon claire et compréhensible avec une
   checklist des éléments importants (brouillon des différentes grandes taches,
