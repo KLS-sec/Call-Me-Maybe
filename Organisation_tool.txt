@@ -51,6 +51,9 @@ https://www.w3schools.com/python/python_json.asp
 https://www.w3schools.com/python/ref_module_json.asp
 
 [authorized functions]############################################################################################
+Must add NumPy
+Must add Pydantic
+Must add uv
 
 [Tools]###########################################################################################################
   checker (doc compresse dans slack) :
