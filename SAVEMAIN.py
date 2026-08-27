@@ -18,7 +18,7 @@ def main() -> None:
                      "the function in this list that is the most adapted to "
                      f"solve the task: {function_dict}<think> </no_think>")
     result: list[int] = model.encode(msg_area)[0].tolist()
-    for x in range(100):
+    for x in range(40):
         y: list[float] = model.get_logits_from_input_ids(result)
         z = 0
 
@@ -26,6 +26,7 @@ def main() -> None:
             z += 1
         result.append(z)
         empty_list.append(z)
+        # Kill the loop when EOS is reached.
         if z == 151643:
             break
         if z == 4710 and x != 0:
