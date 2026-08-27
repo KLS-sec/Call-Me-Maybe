@@ -12,8 +12,13 @@ def main() -> None:
         file.close()
 
     empty_list: list[int] = list()
-    result: list[int] = model.encode(f"You are an AI assistant. Among theses functions: {function_dict}. which one is the most adapted to answer to this question: {input_dict[1]}.")[0].tolist()
-    for x in range(25):
+    msg_area: str = ("You are an AI assistant. You only give short answers "
+                     "and no verbosity. Here is a task that need to be solved,"
+                     f" but not by you: {input_dict[1]}. You have to give me "
+                     "the function in this list that is the most adapted to "
+                     f"solve the task: {function_dict}<think> </no_think>")
+    result: list[int] = model.encode(msg_area)[0].tolist()
+    for x in range(100):
         y: list[float] = model.get_logits_from_input_ids(result)
         z = 0
 
@@ -31,7 +36,6 @@ def main() -> None:
     for c in range(len(empty_list)):
         print(model.decode(empty_list[c]), "=", empty_list[c])
     print("codded =", empty_list)
-    print("ok")
 
 
 if __name__ == "__main__":
