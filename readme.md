@@ -15,6 +15,9 @@ balises
 permet de mettre la pre reflection la dedans specifiquement
 <think> </think>
 
+symbole important
+Ġ
+
 ###################
 balises:
 eod token

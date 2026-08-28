@@ -14,6 +14,7 @@ data et balises readthedocs
 notebookllm lui donner le git complet (need password)
 
 # TODO
+doc:
   function calling:
   https://www.promptingguide.ai/applications/function_calling
   constrained codding:
@@ -24,6 +25,31 @@ notebookllm lui donner le git complet (need password)
   doc:
   https://qwen.readthedocs.io/en/latest/getting_started/concepts.html#
 
+parseer:
+  creer un parser qui rend les json plus lisibles et exploitable pour moi
+    creer une liste des fonctions seules?
+various:
+  Faire en sorte que le systeme de limitation utilise les json comme source de limitation
+    quelle fonction? limiter a fouiller dans la liste de fonctions dispo
+    quel argument? Fouiller uniquement dans le prompt lui meme
+    remplacer les Ġ par " " pour des comparaisons?
+
+
+plan:
+  boucle 1:
+    prompt pour trouver la bonne fonction
+      limite ses droit de token a la liste de fonction
+  boucle 2:
+    je donne le prompt + la fonction choisit et demmande les arguments
+      limite ses droits a ce qui est dans le prompt
+        me sert du type pour limiter encore plus
+      doit trouver un moyen d assurer le bon nombre d arguments
+        me servir de la description des fonctions?
+
+securite:
+  pour input foireux:
+    ajouter une boucle lui demandant si une des fonctions corresponds?
+    comment securiser les arguments?
 
 # DONE
 
