@@ -13,6 +13,7 @@ def main() -> None:
     print("\n", func_names)
 
     empty_list: list[int] = list()
+    test_empty_list: list[int] = list()
     msg_area: str = ("You are an AI assistant. You only give short answers, "
                      "no verbosity. Here is a task that need to be solved,"
                      f" but not by you: {input_dict[2]}. You have to give me "
@@ -23,13 +24,22 @@ def main() -> None:
     for x in range(40):
         # loggit: list[float] => c est une liste des float, leurs POSITION decide quel token est concerne
         loggit_list: list[float] = model.get_logits_from_input_ids(result)
-
+#######################################
         # HERE **** !!!!
+        z = 0
+        test_max_loggit_list = max(loggit_list)
+        while loggit_list[z] != test_max_loggit_list:
+            z += 1
+        test_empty_list.append(z)
+        print("result =", model.decode(test_empty_list[-1]), "proto z =", z)
+
         for f in func_names:
             for g in range(len(loggit_list)):
                 if model.decode(g) not in f:
                     loggit_list[g] = float('-inf')
 
+        # inverser le bordel, tout interdire puis autoriser tout ce auie st dedans, sinon plus rien ne passe
+#####################################
         # recupere le plus haut et l ajoute
         z = 0
         max_loggit_list = max(loggit_list)
@@ -41,6 +51,7 @@ def main() -> None:
 
         # Kill the loop when EOS is reached.
         if z == 151643:
+            print("EOS REACHED")
             break
 
     print("result =", model.decode(empty_list))
