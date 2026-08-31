@@ -56,3 +56,13 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+
+"""
+        msg_area: str = ("You are an AI assistant. You only give short answers, "
+                         "no verbosity. Here is a task that need to be solved,"
+                         f" but not by you: {input_dict[a]}. You have to give me "
+                         "the most adapted function in this list to "
+                         f"solve this task: {function_dict}. <think> </think> function:")
+"""

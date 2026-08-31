@@ -22,8 +22,6 @@ doc:
   https://zeroentropy.dev/concepts/constrained-decoding/
   Used AI:
   https://huggingface.co/Qwen/Qwen3-0.6B
-  doc:
-  https://qwen.readthedocs.io/en/latest/getting_started/concepts.html#
 
 parseer:
   creer un parser qui rend les json plus lisibles et exploitable pour moi
@@ -52,6 +50,9 @@ securite:
     comment securiser les arguments?
 
 # DONE
+
+V  doc:
+V  https://qwen.readthedocs.io/en/latest/getting_started/concepts.html#
 
 V  installer la llm et tester dans le vide
 
