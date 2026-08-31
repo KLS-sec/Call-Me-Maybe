@@ -9,10 +9,10 @@ def main() -> None:
     function_dict = parsing.get_func_descr()
     func_names = parsing.get_func_names(function_dict)
     none_dict = {
-                "name": "None",
+                "name": "fn_none",
                 "description": "To use if no other function matches the request.",
                 }
-    func_names.append("None")
+    func_names.append("fn_none")
     function_dict.append(none_dict)
     print(input_dict[2])
     print("\n", func_names)
@@ -22,15 +22,15 @@ def main() -> None:
     answers: list[list[int]] = list()
     #######################################################
     # Main core
-    for a in range(3):  # len(input_dict)
+    for a in range(4):  # len(input_dict)
         # HERE **** !!!! rework liste des fonctions pour la rendre plus digeste
         msg_area: str = ("You are a function selector."
-                         "Give me the adapted function in this list or 'none' if there isn't any."
+                         "Give me the adapted function in this list or 'fn_none' if there isn't any."
                          "Function list:"
                          f"{function_dict}."
                          "Task to solve:"
-                         f"{input_dict[a]}.")
-        msg_area.append("<think> </think> Answer: ")
+                         f"{input_dict[a]}."
+                         "<think> </think> Answer: ")
         result: list[int] = model.encode(msg_area)[0].tolist()
 
         for x in range(3):
