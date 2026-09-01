@@ -5,49 +5,35 @@ import parsing
 def main() -> None:
     model = llm_sdk.Small_LLM_Model()
 
-    input_list = parsing.get_test_prompts()
+    input_dict = parsing.get_test_prompts()
     function_dict = parsing.get_func_descr()
     func_names = parsing.get_func_names(function_dict)
-    # none_dict = {
-                # "name": "fn_none",
-             #    "description": "Use this if no function matches the request.",
-            #     }
+    none_dict = {
+                "name": "fn_none",
+                "description": "To use if no other function matches the request.",
+                }
     func_names.append("fn_none")
-    # function_dict.insert(0, none_dict)
-    func_dict_clean = parsing.func_dict_cleaner(function_dict)
-    print(input_list[2])
-    print("\n")
-    for func in func_names:
-        print(func)
+    function_dict.append(none_dict)
+    print(input_dict[2])
+    print("\n", func_names)
     print(function_dict)
-    for funcc in function_dict:
-        print(funcc)
-    for funccc in func_dict_clean:
-        print("clean func=", funccc)
 
     word_buffer: list[int] = list()
     answers: list[list[int]] = list()
     #######################################################
     # Main core
-    for a in range(4):  # len(input_list)
-        # HERE **** !!!!
-        # Rework liste des fonctions pour la rendre plus digeste
-        # Rework le prompt
-        """
-        msg_area: str = ("You are a function selector. Given a user request, respond with ONLY the function name, nothing else. If no function matches, answer with fn_none."
-                         "\nAvaiable functions:")
-        """
-        msg_area: str = ("You are a function checker. You have to tell me if any function in the list can solve the user input. Answer ONLY yes or no, nothing else"
-                         "\nAvaiable functions:")
-        for b in function_dict:
-            msg_area = msg_area + (f'\n -{b["name"]}: {b["description"]}')
-        msg_area = msg_area + ("\nUser request: "
-                               f"{input_list[a]}"
-                               "\nyes or no:")
-        print(msg_area)
+    for a in range(4):  # len(input_dict)
+        # HERE **** !!!! rework liste des fonctions pour la rendre plus digeste
+        msg_area: str = ("You are a function selector."
+                         "Give me the adapted function in this list or 'fn_none' if there isn't any."
+                         "Function list:"
+                         f"{function_dict}."
+                         "Task to solve:"
+                         f"{input_dict[a]}."
+                         "<think> </think> Answer: ")
         result: list[int] = model.encode(msg_area)[0].tolist()
 
-        for x in range(1):
+        for x in range(3):
             # loggit: list[float] => c est une liste des float, leurs POSITION decide quel token est concerne
             loggit_list: list[float] = model.get_logits_from_input_ids(result)
 
@@ -58,10 +44,7 @@ def main() -> None:
 
             # If the tokken cannot be found in the list of functions set it to -inf
             for g in range(len(loggit_list)):
-                """
                 if all(model.decode(g) not in tokken for tokken in func_names):
-                    loggit_list[g] = float('-inf')"""
-                if model.decode(g) != "yes" and model.decode(g) != "no":
                     loggit_list[g] = float('-inf')
                 if g >= 151644:
                     loggit_list[g] = float('-inf')

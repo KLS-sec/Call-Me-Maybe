@@ -58,11 +58,37 @@ if __name__ == "__main__":
     main()
 
 
-
+# L original qui marche assez bien
 """
         msg_area: str = ("You are an AI assistant. You only give short answers, "
                          "no verbosity. Here is a task that need to be solved,"
                          f" but not by you: {input_dict[a]}. You have to give me "
                          "the most adapted function in this list to "
                          f"solve this task: {function_dict}. <think> </think> function:")
+"""
+
+# Quasi fonctionnel
+"""
+        msg_area: str = ("You are a function selector."
+                         "Give me the adapted function in this list or 'fn_none' if there isn't any."
+                         "Function list:"
+                         f"{function_dict}."
+                         "Task to solve:"
+                         f"{input_dict[a]}."
+                         "<think> </think> Answer: fn_")
+"""
+#proposed by gpt
+"""
+        msg_area: str = ("<|im_start|>system\nYou are a function-calling assistant. Your task is to select the best function from the provided function definitions and provide the arguments required to call it."
+                         " Avaiable functions:")
+        for b in function_dict:
+            msg_area = msg_area + (f'\n-{b["name"]}: {b["description"]}')
+        msg_area += ("\nDo not answer the user's request."
+                     "\nDo not explain your choice."
+                     "\n<|im_end|>")
+        msg_area = msg_area + ("\n<|im_start|>user"
+                               f"\n{input_list[a]}"
+                               "\n<|im_end|>"
+                               "\n<|im_start|>assistant"
+                               "\nFunction name: fn_")
 """
