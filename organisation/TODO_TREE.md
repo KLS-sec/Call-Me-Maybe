@@ -1,17 +1,18 @@
 # ONIT
+
+ranger la partie func_name_list
+
 Tuto CMM:
 https://github.com/SaraFreitas-dev/Call-me-maybe
   V Read the basic page
     Read the .md
       llm*2 , tokenisation, uv * 2
 
-
 # NEXT
-organise the Ai answer
 
-data et balises readthedocs
+notebookllm lui donner le git complet ou le pdf de cours? (need password)
 
-notebookllm lui donner le git complet (need password)
+apprendre a utiliser json.load
 
 # TODO
 doc:
@@ -46,8 +47,10 @@ plan:
 
 securite:
   pour input foireux:
-    ajouter une boucle lui demandant si une des fonctions corresponds?
-    comment securiser les arguments?
+    securiser pour les json mal formate  en entree
+      pydentic
+    comment securiser les arguments? 
+      regex hy per constraint
 
 # DONE
 

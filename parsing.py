@@ -2,7 +2,7 @@ import json
 
 
 def get_test_prompts() -> list[str]:
-    """Return the JSON of the test prompts."""
+    """Return the list of prompts."""
     input_dict: list[str] = list()
     with open("data/input/function_calling_tests.json") as file:
         buffer = json.load(file)
@@ -30,6 +30,7 @@ def get_func_names(function_dict) -> list[str]:
 
 
 def func_dict_cleaner(function_dict) -> list[dict[str]]:
+    """Return a list of dict with the functions's names and descriptions."""
     returner: list[dict[str]] = list()
     y: dict[str] = dict()
     for x in function_dict:
