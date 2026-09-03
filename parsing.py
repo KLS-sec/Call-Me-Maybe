@@ -1,21 +1,70 @@
 import json
+import argparse
+import llm_sdk
+from dataclasses import dataclass
+from typing import Any
 
 
-def get_test_prompts() -> list[str]:
+# **** !!!! creer une finction qui le creer et retourne l objet.
+# A integrer avec le systeme de flag qui sont demande (necessite de modifier le reste des parsers)
+@dataclass
+class DataSet:
+    """The data to use."""
+    model: Any
+    prompt_list: list[str]
+    function_json: list[dict]
+    func_names: list[str]
+    args: argparse.Namespace
+
+
+def create_dataset() -> DataSet:
+    args: argparse.Namespace = arg_parser()
+    model = llm_sdk.Small_LLM_Model()
+    prompt_list: list[str] = get_test_prompts(args.input)
+    function_json: list[dict] = get_func_json(args.functions_definition)
+    func_names: list[str] = get_func_names(function_json)
+
+    obj = DataSet(model=model,
+                  prompt_list=prompt_list,
+                  function_json=function_json,
+                  func_names=func_names,
+                  args=args)
+    return (obj)
+
+
+# Use arge with args.function_definition ou les 2 autres
+def arg_parser() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--functions_definition",
+                        default="data/input/functions_definition.json",
+                        help="Input a JSON file with function definitions.")
+    parser.add_argument("--input",
+                        default="data/input/function_calling_tests.json",
+                        help="Input a JSON file with prompts.")
+    parser.add_argument("--output",
+                        default="data/output/function_calling_results.json",
+                        help="Output print path.")
+    args = parser.parse_args()
+    return args
+######################################################################
+
+
+def get_test_prompts(path: str) -> list[str]:
     """Return the list of prompts."""
-    input_dict: list[str] = list()
-    with open("data/input/function_calling_tests.json") as file:
+    prompt_list: list[str] = list()
+    with open(path) as file:
         buffer = json.load(file)
         file.close()
     for x in buffer:
-        input_dict.append(x["prompt"])
-    return input_dict
+        prompt_list.append(x["prompt"])
+    return prompt_list
 
 
-def get_func_descr() -> list[dict]:
-    """Return the JSON of the functions and their descriptions."""
+def get_func_json(path: str) -> list[dict]:
+    """Return the JSON of the functions."""
     input_dict: list[dict] = list()
-    with open("data/input/functions_definition.json") as file:
+    with open(path) as file:
         input_dict = json.load(file)
         file.close()
     return input_dict
@@ -29,6 +78,7 @@ def get_func_names(function_dict) -> list[str]:
     return func_names
 
 
+# Useless? @@@@
 def func_dict_cleaner(function_dict) -> list[dict[str]]:
     """Return a list of dict with the functions's names and descriptions."""
     returner: list[dict[str]] = list()

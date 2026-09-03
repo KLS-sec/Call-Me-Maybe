@@ -1,15 +1,11 @@
-import llm_sdk
 import parsing
 
 
-def func_name_list() -> list[list[str]]:
-    model = llm_sdk.Small_LLM_Model()
-    prompt_list = parsing.get_test_prompts()
-    function_dict = parsing.get_func_descr()
-    func_names = parsing.get_func_names(function_dict)
-    print(func_names)
-    for _ in function_dict:
-        print(_)
+def func_name_list(dataset: parsing.DataSet) -> list[list[str]]:
+    model = dataset.model
+    prompt_list = dataset.prompt_list
+    function_json = dataset.function_json
+    func_names = dataset.func_names
 
     functions_answers: list[list[int]] = list()
     empty_list: list[int] = list()
@@ -21,20 +17,20 @@ def func_name_list() -> list[list[str]]:
                          f"{prompt_list[a]}."
                          " You have to give me the function in this list that"
                          " is the most adapted to solve the task: "
-                         f"{function_dict}."
+                         f"{function_json}."
                          " Do not invent, stop once you gave the function"
                          " name.<think> </no_think> function: ")
         result: list[int] = model.encode(msg_area)[0].tolist()
         for _ in range(10):
             loggit_list: list[float] = model.get_logits_from_input_ids(result)
 
-            # If the tokken cannot be found in the list of functions set it to -inf
+            # If the tokken is not in the list of functions set it to -inf.
             for b in range(len(loggit_list)):
                 if (all(model.decode(b) not in name for name in func_names)
                    or b >= 151644):
                     loggit_list[b] = float('-inf')
 
-            # recupere le plus haut et l ajoute
+            # Add the highest to the list.
             z = 0
             max_loggit_list = max(loggit_list)
             while loggit_list[z] != max_loggit_list:
@@ -42,8 +38,6 @@ def func_name_list() -> list[list[str]]:
 
             result.append(z)
             empty_list.append(z)
-            print("result =", model.decode(empty_list[-1]), "=", z)
-            print(".", model.decode(empty_list), ".", sep="")
             if any(model.decode(empty_list) == name for name in func_names):
                 print("name found")
                 break
@@ -54,18 +48,13 @@ def func_name_list() -> list[list[str]]:
         functions_answers.append(empty_list.copy())
         empty_list.clear()
 
-    for c in functions_answers:
-        print("result =", model.decode(c))
-        print("codded =", c)
-
     returner: list[list[str]] = list()
     for d in range(len(functions_answers)):
         returner.append(model.decode(functions_answers[d]))
 
     for e in range(len(returner)):
         if any(returner[e] == name for name in func_names):
-            print(prompt_list[e])
-            print("ok")
+            continue
         else:
             raise ValueError("Invalid function detected"
                              f" for {prompt_list[e]}.")
