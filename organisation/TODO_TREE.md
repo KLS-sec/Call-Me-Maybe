@@ -1,5 +1,7 @@
 # ONIT
 
+Comment il gere le regex?
+faire une fonctions specifiaue pour ca si je n ai pas de solution
 Pour trouver comment prendre les arguments et gerer regex:
   Tuto CMM:
   https://github.com/SaraFreitas-dev/Call-me-maybe

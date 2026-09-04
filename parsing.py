@@ -15,6 +15,7 @@ class DataSet:
     function_json: list[dict]
     func_names: list[str]
     args: argparse.Namespace
+    func_answers: list[str]
 
 
 def create_dataset() -> DataSet:
@@ -28,7 +29,8 @@ def create_dataset() -> DataSet:
                   prompt_list=prompt_list,
                   function_json=function_json,
                   func_names=func_names,
-                  args=args)
+                  args=args,
+                  func_answers=["E"])
     return (obj)
 
 
@@ -63,11 +65,11 @@ def get_test_prompts(path: str) -> list[str]:
 
 def get_func_json(path: str) -> list[dict]:
     """Return the JSON of the functions."""
-    input_dict: list[dict] = list()
+    function_json: list[dict] = list()
     with open(path) as file:
-        input_dict = json.load(file)
+        function_json = json.load(file)
         file.close()
-    return input_dict
+    return function_json
 
 
 def get_func_names(function_dict) -> list[str]:
