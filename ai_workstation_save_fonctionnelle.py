@@ -65,7 +65,7 @@ def func_name_list(dataset: parsing.DataSet) -> list[str]:
 def arg_finder(dataset: parsing.DataSet) -> None:  # @@@@ Return something?
 
     model = dataset.model
-    temp: list[list[int]] = list()  # (@)
+
     functions_answers: list[list[int]] = list()
     empty_list: list[int] = list()
 
@@ -73,6 +73,7 @@ def arg_finder(dataset: parsing.DataSet) -> None:  # @@@@ Return something?
         for x in dataset.function_json:
             if x["name"] == dataset.func_answers[a]:
                 in_use_function = x
+        print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", in_use_function["parameters"])
 
         msg_area: str = ("You are an argument finder. "
                          "Given a prompt and the function used to solve it. "
@@ -87,23 +88,6 @@ def arg_finder(dataset: parsing.DataSet) -> None:  # @@@@ Return something?
         for _ in range(40):
             loggit_list: list[float] = model.get_logits_from_input_ids(result)
 
-            # Prioritise EOS if the output is now correct.
-            if "}" in model.decode(empty_list):
-                for b in range(len(loggit_list)):
-                    if b != 151643:
-                        loggit_list[b] = float('-inf')
-            """
-            for b in range(len(loggit_list)):
-                if (all(model.decode(b) not in name for name in func_names)
-                   or b >= 151644):
-                    loggit_list[b] = float('-inf')
-            if any(model.decode(empty_list) == name for name in dataset.func_names):
-                print("name found")  # (@)
-                break
-            if "}" in model.decode(empty_list):  # @@@@ replace withe a loop to put eos instead of the next element?
-                break"""
-            #############
-
             # Add the highest to the list.
             z = 0
             max_loggit_list = max(loggit_list)
@@ -112,23 +96,27 @@ def arg_finder(dataset: parsing.DataSet) -> None:  # @@@@ Return something?
 
             result.append(z)
             empty_list.append(z)
-
-            print("result = .", model.decode(empty_list), ".", sep="")  # (@)
-
+            print("result = .", model.decode(empty_list), ".", sep="")
+            if any(model.decode(empty_list) == name for name in dataset.func_names):
+                print("name found")  # (@)
+                break
             # Kill the loop if EOS is reached.
-
             if z == 151643:
                 print("EOS REACHED")
                 break
 
+            if "}" in model.decode(empty_list):
+                break
+
         functions_answers.append(empty_list.copy())
         functions_answers[-1] = model.decode(functions_answers[-1])
-        temp.append(len(empty_list))
+        functions_answers.append(len(empty_list))
         empty_list.clear()
-    return (functions_answers)
+    print("FINAL RESULT =")
+    for res in functions_answers:
+        print("------------------\n#", res, "#", sep="")
 
-
-# This one is almost perfect
+#This one is almost perfect
 """
         msg_area: str = ("You are an argument finder. "
                          "Given a prompt and the function used to solve it you must give the arguments needed. "

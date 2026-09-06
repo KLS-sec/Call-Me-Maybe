@@ -5,8 +5,6 @@ from dataclasses import dataclass
 from typing import Any
 
 
-# **** !!!! creer une finction qui le creer et retourne l objet.
-# A integrer avec le systeme de flag qui sont demande (necessite de modifier le reste des parsers)
 @dataclass
 class DataSet:
     """The data to use."""
@@ -16,6 +14,7 @@ class DataSet:
     func_names: list[str]
     args: argparse.Namespace
     func_answers: list[str]
+    prompt_answers: list[str]
 
 
 def create_dataset() -> DataSet:
@@ -30,7 +29,8 @@ def create_dataset() -> DataSet:
                   function_json=function_json,
                   func_names=func_names,
                   args=args,
-                  func_answers=["E"])
+                  func_answers=["E"],
+                  prompt_answers=["E"])
     return (obj)
 
 

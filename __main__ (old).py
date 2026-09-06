@@ -23,7 +23,6 @@ def main() -> None:
     #######################################################
     # Main core
     for a in range(4):  # len(input_dict)
-        # HERE **** !!!! rework liste des fonctions pour la rendre plus digeste
         msg_area: str = ("You are a function selector."
                          "Give me the adapted function in this list or 'fn_none' if there isn't any."
                          "Function list:"

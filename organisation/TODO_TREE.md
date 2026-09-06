@@ -1,7 +1,29 @@
 # ONIT
+0V finir de tester la dict
+1V tester le code general et le timer (2:47)
+2 parser la reponse
+  systeme de decoupage pour ne garder que les arguments
+  ############
+  import ast
 
-Comment il gere le regex?
-faire une fonctions specifiaue pour ca si je n ai pas de solution
+  text = "{'source_string': 'The cat sat on the mat with another cat', 'regex': 'cat', 'replacement': 'dog'}"
+  data = ast.literal_eval(text)
+
+  print(data["source_string"])
+  print(data["regex"])
+  print(data["replacement"])
+  ----------------------------------
+  json.load(text) si mauvais format ca echoue
+  json.dump(text) transforme un texte en format json
+  ############
+2.1
+    -format de la reponse strict en 3 lignes
+    -utiliser le nom de la fonction pour recuperer le bon json
+    -1 prompt 2 nom fonc 3 arguments
+      -recupere les noms des parametres, les compter, remplir le tout avec les arguments recuperes
+3 hardcoder le regex et remplacer a|e|i|o|u par aeiouyAEIOUY + V le '}' en EOS
+
+
 Pour trouver comment prendre les arguments et gerer regex:
   Tuto CMM:
   https://github.com/SaraFreitas-dev/Call-me-maybe
