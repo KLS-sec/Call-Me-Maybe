@@ -37,6 +37,7 @@ def outputter(dataset: DataSet) -> None:
     #!!!!##########################
     arg_list = organiser(dataset)
     # call les json pour trouver le nombre d arg et leurs format (a, s, text etc)
+    # corrige le a|e|i|o|u
     # fonction qui cree le bon format
     # rajoute tout le bordel dans le paragraphe output
     # ajoute le tout dans un .txt externe
