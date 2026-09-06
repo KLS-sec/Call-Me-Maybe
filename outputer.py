@@ -4,7 +4,7 @@ from parsing import DataSet
 
 def organiser(dataset: DataSet) -> list[list[str]]:
     triage = list()
-    sec_temp_list = list()
+    arg_list = list()
     buffer = list()
     print("FINAL RESULT =")  # (@)
     for res in range(len(dataset.prompt_answers)):  # (@)
@@ -24,13 +24,20 @@ def organiser(dataset: DataSet) -> list[list[str]]:
             buffer.append(copy.pop())
             if len(copy) > 0:
                 copy.pop()
-        sec_temp_list.append(buffer.copy())
+        arg_list.append(buffer.copy())
         buffer.clear()
     print("proper result =")
-    for x in sec_temp_list:
+    for x in arg_list:
         print(x)
 
-    return sec_temp_list
+    return arg_list
+
 
 def outputter(dataset: DataSet) -> None:
-    
+    #!!!!##########################
+    arg_list = organiser(dataset)
+    # call les json pour trouver le nombre d arg et leurs format (a, s, text etc)
+    # fonction qui cree le bon format
+    # rajoute tout le bordel dans le paragraphe output
+    # ajoute le tout dans un .txt externe
+    ###############################
