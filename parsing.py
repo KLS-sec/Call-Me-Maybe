@@ -7,7 +7,7 @@ from typing import Any
 
 @dataclass
 class DataSet:
-    """The data to use."""
+    """Compile the needed datas."""
     model: Any
     prompt_list: list[str]
     function_json: list[dict]
@@ -18,6 +18,7 @@ class DataSet:
 
 
 def create_dataset() -> DataSet:
+    """Create the DataSet object."""
     args: argparse.Namespace = arg_parser()
     model = llm_sdk.Small_LLM_Model()
     prompt_list: list[str] = get_test_prompts(args.input)
@@ -34,8 +35,8 @@ def create_dataset() -> DataSet:
     return (obj)
 
 
-# Use arge with args.function_definition ou les 2 autres
 def arg_parser() -> argparse.Namespace:
+    """Return the args ready to use with default values."""
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--functions_definition",
@@ -53,22 +54,83 @@ def arg_parser() -> argparse.Namespace:
 
 
 def get_test_prompts(path: str) -> list[str]:
-    """Return the list of prompts."""
+    """Return the list of prompts and secure the JSON formating."""
     prompt_list: list[str] = list()
-    with open(path) as file:
-        buffer = json.load(file)
-        file.close()
-    for x in buffer:
-        prompt_list.append(x["prompt"])
+    try:
+        with open(path) as file:
+            buffer = json.load(file)
+            file.close()
+        for x in buffer:
+            if type(x["prompt"]) is not str:  # !!!!
+                raise ValueError("Invalid prompt, not a string.")
+            if not x["prompt"]:  # !!!!
+                raise ValueError("Invalid prompt, empty prompt.")
+            prompt_list.append(x["prompt"])
+    except KeyError as err:
+        print("Invalid prompt key, correct key:", err)
+        exit()
+    except ValueError as err:
+        print("JSON formating anomaly:", err)
+        exit()
+    except Exception as err:
+        print("Invalid JSON file:", err)
+        exit()
     return prompt_list
+
+
+def json_security(function_json: list[dict]) -> None:
+    """Security against invalid function definition JSON."""
+    trashcan: list[Any] = list()
+    try:
+        for x in function_json:
+            trashcan.append(x["name"])
+            if not x["name"]:
+                raise ValueError("Empty function name.")
+            if type(x["name"]) is not str:
+                raise ValueError("Function name is not a string.")
+
+        for x in function_json:
+            trashcan.append(x["description"])
+            if not x["description"]:
+                raise ValueError("Empty function description in.", x["name"])
+            if type(x["description"]) is not str:
+                raise ValueError("Function description is not a string in.", x["name"])
+
+        for x in function_json:
+            trashcan.append(x["parameters"])
+            if not x["parameters"]:
+                raise ValueError("Empty function parameter in.", x["name"])
+            if type(x["parameters"]) is not dict:
+                raise ValueError("Function parameter  is not a dict.", x["name"])
+        for x in function_json:
+            for y in x["parameters"]:
+                if not x["parameters"][y]["type"]:
+                    raise ValueError("Empty function parameter type.", x["name"])
+                if type(x["parameters"][y]["type"]) is not str:
+                    raise ValueError("Function parameter type is not a dict.", x["name"])
+
+    except KeyError as err:
+        print("Invalid prompt key, correct key:", err)
+        exit()
+    except ValueError as err:
+        print("JSON formating anomaly:", err)
+        exit()
+    except Exception as err:
+        print("Invalid JSON file:", err)
+        exit()
 
 
 def get_func_json(path: str) -> list[dict]:
     """Return the JSON of the functions."""
     function_json: list[dict] = list()
-    with open(path) as file:
-        function_json = json.load(file)
-        file.close()
+    try:
+        with open(path) as file:
+            function_json = json.load(file)
+            file.close()
+    except Exception as err:
+        print(err, "Invalid JSON file.")
+        exit()
+    json_security(function_json)
     return function_json
 
 

@@ -116,7 +116,6 @@ def arg_finder(dataset: parsing.DataSet) -> None:  # @@@@ Return something?
             print("result = .", model.decode(empty_list), ".", sep="")  # (@)
 
             # Kill the loop if EOS is reached.
-
             if z == 151643:
                 print("EOS REACHED")
                 break

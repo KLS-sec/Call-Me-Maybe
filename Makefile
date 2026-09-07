@@ -1,4 +1,4 @@
-NAME = main.py
+NAME = __main__.py
 UV = uv
 VENV = .venv
 PYTHON = $(VENV)/bin/python

@@ -1,10 +1,11 @@
 import ai_workstation
+import outputter
 import sys
 import parsing
 
 
 def main() -> None:
-    try:
+    # try:  # (+)
         # Dataset with every info in it
         dataset = parsing.create_dataset()
         dataset.func_answers.clear()
@@ -15,7 +16,7 @@ def main() -> None:
         print(len(x))
         exit()"""
         ######################################################################
-        dataset.func_answers = ['fn_add_numbers',  # (#)
+        """dataset.func_answers = ['fn_add_numbers',  # (#)
                                 'fn_add_numbers',
                                 'fn_greet',
                                 'fn_greet',
@@ -25,16 +26,16 @@ def main() -> None:
                                 'fn_get_square_root',
                                 'fn_substitute_string_with_regex',
                                 'fn_substitute_string_with_regex',
-                                'fn_substitute_string_with_regex',]
+                                'fn_substitute_string_with_regex',]"""
         # Get the list of function names in order
-        # dataset.func_answers = ai_workstation.func_name_list(dataset)
+        dataset.func_answers = ai_workstation.func_name_list(dataset)  # (+)
 
         print("\nFinal result:")  # (@)
         for a in dataset.func_answers:  # (@)
             print(a)
 
         dataset.prompt_answers.clear()
-        dataset.prompt_answers = ["'a': 2, 'b': 3 }",
+        """dataset.prompt_answers = ["'a': 2, 'b': 3 }",  # (#)
                                   "'a': 265, 'b': 345 }",
                                   "name: 'shrek'}",
                                   '"name": "john" }',
@@ -44,12 +45,16 @@ def main() -> None:
                                   "144}",
                                   '"source_string": "Hello 34 I\'m 233 years old", "regex": "34", "replacement": "34" }',
                                   "'source_string': 'Programming is fun', 'regex': 'a|e|i|o|u', 'replacement': '*'}",
-                                  "'source_string': 'The cat sat on the mat with another cat', 'regex': 'cat', 'replacement': 'dog'}",]
-        # dataset.prompt_answers = ai_workstation.arg_finder(dataset)  # Supr temporraire
+                                  "'source_string': 'The cat sat on the mat with another cat', 'regex': 'cat', 'replacement': 'dog'}",]"""
+        # Get the arguments for the JSON
+        dataset.prompt_answers = ai_workstation.arg_finder(dataset)  # (+)
 
-    except Exception as err:
-        print("Error detected.", err)
-        sys.exit()
+        # Organise the text then print it !!!!
+        outputter.outputter(dataset)
+    # (+)
+        """except Exception as err:  # (+)
+        print("Edge case error detected.", err)
+        sys.exit()"""
 
 
 if __name__ == "__main__":
