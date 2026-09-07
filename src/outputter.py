@@ -1,8 +1,8 @@
 import re  # (#)
-from parsing import DataSet
+from . import parsing
 
 
-def organiser(dataset: DataSet) -> list[list[str]]:
+def organiser(dataset: parsing.DataSet) -> list[list[str]]:
     triage: list[list[str]] = list()
     param_list: list[list[str]] = list()
     buffer: list[str] = list()
@@ -37,7 +37,7 @@ def organiser(dataset: DataSet) -> list[list[str]]:
     return param_list
 
 
-def param_formating(param_list: list[list[str]], dataset: DataSet, x: int) -> str:
+def param_formating(param_list: list[list[str]], dataset: parsing.DataSet, x: int) -> str:
     param_dict: dict = dict()
     print("Marker 01")  # (@)
     print("funcname", dataset.func_answers[x], "x =", x)
@@ -83,7 +83,7 @@ def param_formating(param_list: list[list[str]], dataset: DataSet, x: int) -> st
     return (returner)
 
 
-def outputter(dataset: DataSet) -> None:
+def outputter(dataset: parsing.DataSet) -> str:
     # !!!!##########################
     param_list: list[list[str]] = organiser(dataset)
     for x in dataset.function_json:  # (@)
@@ -105,10 +105,11 @@ def outputter(dataset: DataSet) -> None:
     final = final[:-2]
     final += "\n]"
     print(final)
+    return (final)
 
 # Old
 """
-def param_formating(param_list: list[list[str]], dataset: DataSet, x: int) -> str:
+def param_formating(param_list: list[list[str]], dataset: parsing.DataSet, x: int) -> str:
     param_dict: dict = dict()
     for a in dataset.function_json:
         if a["name"] == dataset.func_names[x]:
@@ -119,16 +120,16 @@ def param_formating(param_list: list[list[str]], dataset: DataSet, x: int) -> st
         clean.append(keys[b], param_list[b])
 
 
-def outputter(dataset: DataSet) -> None:
+def outputter(dataset: parsing.DataSet) -> None:
     # !!!!##########################
-    param_list: list[list[str]] = organiser(dataset)
-    prompts: list[str] = dataset.prompt_list
-    func_names: list[str] = dataset.func_answers
-    for x in dataset.function_json:
+    param_list: list[list[str]] = organiser(parsing.dataset)
+    prompts: list[str] = parsing.dataset.prompt_list
+    func_names: list[str] = parsing.dataset.func_answers
+    for x in parsing.dataset.function_json:
         print(len(x["parameters"]))
     final: str = "[\n"
     for x in range(len(func_names)):
-        param_final = param_formating(param_list, dataset, x)
+        param_final = param_formating(param_list, parsing.dataset, x)
         final += ("    {\n"
                   f"        \"prompt\": \"{prompts[x]}\",\n"
                   f"        \"name\": \"{func_names[x]}\"\n"

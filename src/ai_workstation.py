@@ -1,4 +1,4 @@
-import parsing
+from . import parsing
 
 
 def func_name_list(dataset: parsing.DataSet) -> list[str]:

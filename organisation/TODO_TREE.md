@@ -17,10 +17,9 @@ input (page 10):
         print(argument)
 
 
-
-
-
 # NEXT
+
+ecrire le resultat (args d input deja geres)
 
 le makefile
 

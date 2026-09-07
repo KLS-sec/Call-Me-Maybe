@@ -75,6 +75,11 @@ def get_test_prompts(path: str) -> list[str]:
     except Exception as err:
         print("Invalid JSON file:", err)
         exit()
+    print("HHHHHHHHHHHHHHHHHHHHHHHHHH", prompt_list)
+    for y in range(len(prompt_list)):
+        if type(prompt_list[y]) is str:
+            prompt_list[y] = prompt_list[y].replace('"', '\\"')
+    print("HHHHHHHHHHHHHHHHHHHHHHHHHH", prompt_list)
     return prompt_list
 
 
