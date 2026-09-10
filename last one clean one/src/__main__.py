@@ -26,14 +26,11 @@ def main() -> None:
         with output_path.open("w") as file:
             file.write(final)
 
-    except Exception as err:
+    except ValueError as err:
+        print("Error type:", type(err).__name__)
         print("Edge case error detected.", err)
         exit()
 
 
 if __name__ == "__main__":
     main()
-
-# Correction
-# uv run python -m moulinette prepare_exercises --set private
-# uv run python -m moulinette grade_student_answers --set private data/output/function_calls.json

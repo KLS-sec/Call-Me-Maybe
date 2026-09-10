@@ -1,37 +1,44 @@
 import json
 import argparse
-import llm_sdk
-from dataclasses import dataclass
+from llm_sdk.llm_sdk import Small_LLM_Model
 from typing import Any
+from pydantic import BaseModel, ValidationError
 
 
-@dataclass
-class DataSet:
-    """Compile the needed datas."""
+class DataSet(BaseModel):
+    """Compile the needed datas.
+
+    Correction of pydantic inability to deal with the argparse.
+    """
+    model_config = {"arbitrary_types_allowed": True}
     model: Any
     prompt_list: list[str]
-    function_json: list[dict]
+    function_json: list[Any]
     func_names: list[Any]
     args: argparse.Namespace
-    func_answers: list[str]
-    prompt_answers: list[str]
+    func_answers: list[Any]
+    prompt_answers: list[Any]
 
 
 def create_dataset() -> DataSet:
     """Create the DataSet object."""
     args: argparse.Namespace = arg_parser()
-    model = llm_sdk.Small_LLM_Model()
+    model = Small_LLM_Model()
     prompt_list: list[str] = get_test_prompts(args.input)
-    function_json: list[dict] = get_func_json(args.functions_definition)
+    function_json: list[Any] = get_func_json(args.functions_definition)
     func_names: list[Any] = get_func_names(function_json)
+    try:
+        obj = DataSet(model=model,
+                      prompt_list=prompt_list,
+                      function_json=function_json,
+                      func_names=func_names,
+                      args=args,
+                      func_answers=["E"],
+                      prompt_answers=["E"])
+    except ValidationError as err:
+        print("Invalid DataSet: ", err)
+        exit()
 
-    obj = DataSet(model=model,
-                  prompt_list=prompt_list,
-                  function_json=function_json,
-                  func_names=func_names,
-                  args=args,
-                  func_answers=["E"],
-                  prompt_answers=["E"])
     return (obj)
 
 
@@ -76,11 +83,12 @@ def get_test_prompts(path: str) -> list[str]:
         exit()
     for y in range(len(prompt_list)):
         if type(prompt_list[y]) is str:
+            prompt_list[y] = prompt_list[y].replace('\\', '\\\\')
             prompt_list[y] = prompt_list[y].replace('"', '\\"')
     return prompt_list
 
 
-def json_security(function_json: list[dict]) -> None:
+def json_security(function_json: list[Any]) -> None:
     """Security against invalid function definition JSON."""
     trashcan: list[Any] = list()
     try:
@@ -126,9 +134,9 @@ def json_security(function_json: list[dict]) -> None:
         exit()
 
 
-def get_func_json(path: str) -> list[dict]:
+def get_func_json(path: str) -> list[Any]:
     """Return the JSON of the functions."""
-    function_json: list[dict] = list()
+    function_json: list[Any] = list()
     try:
         with open(path) as file:
             function_json = json.load(file)

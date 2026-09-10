@@ -12,13 +12,13 @@ def organiser(dataset: parsing.DataSet) -> list[list[str]]:
     triage: list[list[str]] = list()
     param_list: list[list[str]] = list()
     buffer: list[str] = list()
-
+    # **** data loss
     for clean in range(len(dataset.prompt_answers)):
         dataset.prompt_answers[clean] = dataset.prompt_answers[clean].strip()
         triage.append(re.split(r": |, ", dataset.prompt_answers[clean]))
         for x in range(len(triage[-1])):
             triage[-1][x] = triage[-1][x].strip(" '\"{}")
-
+    # **** error trigger
     for x in range(len(triage)):
         copy = triage[x]
         while len(copy) > 0:
@@ -39,7 +39,7 @@ def organiser(dataset: parsing.DataSet) -> list[list[str]]:
 def param_formating(param_list: list[str],
                     dataset: parsing.DataSet, x: int) -> str:
     """Reorganise and fuse the argument list in the corect form."""
-    param_dict: dict = dict()
+    param_dict: dict[str, Any] = dict()
 
     for a in dataset.function_json:
         if a["name"] == dataset.func_answers[x]:
@@ -51,11 +51,26 @@ def param_formating(param_list: list[str],
     for c in keys_buffer:
         keys.append(c)
     clean: list[Any] = list()
-    for b in range(len(param_dict)):
+    a_max = len(param_dict)
+    b_max = len(keys)
+    long = a_max
+    if b_max < a_max:
+        long = b_max
+    for b in range(long):  # len(param_dict)
         buffer = keys[b]
         if param_dict[buffer]["type"] == "number":
             clean.append(keys[b])
-            clean.append(float(param_list[b]))
+            try:
+                clean.append(float(param_list[b]))
+            except Exception:
+                clean.append(float(0.00))
+            continue
+        if param_dict[buffer]["type"] == "integer":
+            clean.append(keys[b])
+            try:
+                clean.append(int(param_list[b]))
+            except Exception:
+                clean.append(int(0))
             continue
         clean.append(keys[b])
         clean.append(param_list[b])
@@ -63,7 +78,7 @@ def param_formating(param_list: list[str],
     d = 0
     while d < len(clean):
         returner += f"\"{clean[d]}\": "
-        if type(clean[d + 1]) is float:
+        if type(clean[d + 1]) is float or type(clean[d + 1]) is int:
             returner += f"{clean[d + 1]}, "
         else:
             returner += f"\"{clean[d + 1]}\", "

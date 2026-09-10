@@ -1,21 +1,10 @@
 # ONIT
 
-input (page 10):
-  Your program must be run using the following command (where src is the folder containing your files):
-  Running the program
-  uv run python -m src [--functions_definition <function_definition_file>] [--input <input_file>] [--
-  output <output_file>]
-  By default, the program will read input files from the data/input/
-  directory and write output to the data/output/ directory. You
-  can optionally specify custom paths using the --input and --output
-  arguments. For example:
-  uv run python -m src
-  --functions_definition data/input/functions_definition.json
-  --input data/input/function_calling_tests.json
-  --output data/output/function_calls.json
-        argument = sys.argv[1]
-        print(argument)
+netoyer les prints divers
 
+relire le pdf en entier
+
+faire la checklist
 
 # NEXT
 

@@ -1,5 +1,5 @@
 from . import parsing
-from parsing import Any
+from typing import Any
 
 
 def func_name_list(dataset: parsing.DataSet) -> list[list[str]]:
@@ -60,7 +60,6 @@ def func_name_list(dataset: parsing.DataSet) -> list[list[str]]:
     # Convert the tokken into readable text.
     for d in range(len(functions_answers)):
         returner.append(model.decode(functions_answers[d]))
-
     return (returner)
 
 
