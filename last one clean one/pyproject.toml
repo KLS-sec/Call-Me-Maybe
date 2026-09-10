@@ -18,3 +18,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["llm_sdk"]
+
+[tool.mypy]
+strict = true
+exclude = '(^|/)llm_sdk/'
+
+[[tool.mypy.overrides]]
+module = ["llm_sdk", "llm_sdk.*"]
+follow_imports = "skip"
